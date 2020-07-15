@@ -91,7 +91,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="chapter_1.html"><strong aria-hidden="true">1.</strong> Chapter 1</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="intro.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="hardware/intro.html"><strong aria-hidden="true">2.</strong> Hardware</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="hardware/tgz48.html"><strong aria-hidden="true">2.1.</strong> TGZ48</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -157,7 +157,18 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#chapter-1" id="chapter-1">Chapter 1</a></h1>
+                        <h1><a class="header" href="#knowledge-base" id="knowledge-base">Knowledge Base</a></h1>
+<h1><a class="header" href="#hardware" id="hardware">Hardware</a></h1>
+<p>This chapter contains information about making devices work and general tips for working with them.</p>
+<h1><a class="header" href="#tgz48" id="tgz48">TGZ48</a></h1>
+<h2><a class="header" href="#calculating-position-from-revolutions-and-angle" id="calculating-position-from-revolutions-and-angle">Calculating position from revolutions and angle</a></h2>
+<pre><code class="language-c++">auto map = packet.asMap();
+const uint32_t drive1Angle = static_cast&lt;int32_t&gt;(map[TGZRegisters::Monitor1_aAngle]);
+const int32_t drive1Revs = static_cast&lt;int32_t&gt;(map[TGZRegisters::Monitor1_aRevol]);
+
+const float revolutions = drive1Angle / static_cast&lt;float&gt;(static_cast&lt;uint32_t&gt;(0xffffffff)) + static_cast&lt;float&gt;(drive1Revs);
+</code></pre>
+<p>The key here is to correctly use signed and unsigned integers, mainly for storing the <code>drive1Angle</code> and when casting the maximum value to float.</p>
 
                     </main>
 
