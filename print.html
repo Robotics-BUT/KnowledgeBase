@@ -91,7 +91,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="intro.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="hardware/intro.html"><strong aria-hidden="true">2.</strong> Hardware</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="hardware/tgz48.html"><strong aria-hidden="true">2.1.</strong> TGZ48</a></li></ol></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="intro.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="hardware/intro.html"><strong aria-hidden="true">2.</strong> Hardware</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="hardware/arduino/intro.html"><strong aria-hidden="true">2.1.</strong> Arduino</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="hardware/arduino/leonardo.html"><strong aria-hidden="true">2.1.1.</strong> Arduino Leonardo</a></li><li class="chapter-item expanded "><a href="hardware/arduino/max7219_matrix.html"><strong aria-hidden="true">2.1.2.</strong> MAX72XX Matrix displays</a></li></ol></li><li class="chapter-item expanded "><a href="hardware/interfacing/intro.html"><strong aria-hidden="true">2.2.</strong> Interfacing</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="hardware/interfacing/ch341a.html"><strong aria-hidden="true">2.2.1.</strong> CH341A dongle</a></li></ol></li><li class="chapter-item expanded "><a href="hardware/tgz48.html"><strong aria-hidden="true">2.3.</strong> TGZ48</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -160,6 +160,42 @@
                         <h1><a class="header" href="#knowledge-base" id="knowledge-base">Knowledge Base</a></h1>
 <h1><a class="header" href="#hardware" id="hardware">Hardware</a></h1>
 <p>This chapter contains information about making devices work and general tips for working with them.</p>
+<h1><a class="header" href="#arduino" id="arduino">Arduino</a></h1>
+<p>This section contains bits of information about the Arduino boards itself, its main purpose however is providing information about using 3rd party modules with Arduino boards - mainly describing used libraries, but also electrical connections.</p>
+<h1><a class="header" href="#arduino-leonardo" id="arduino-leonardo">Arduino Leonardo</a></h1>
+<h2><a class="header" href="#spi-problems" id="spi-problems">SPI problems</a></h2>
+<p>Arduino Leonardo doesn't have SPI connected to the female headers on its sides, SPI is only connected to the ICSP 6-pin header on the back of the board. The pinout can be seen in the following image.</p>
+<blockquote>
+<p>Note that there are multiple pinout images around the internet that show the SPI pins connected to the side female headers.</p>
+</blockquote>
+<p><img src="https://duino4projects.com/wp-content/uploads/2013/04/Ardunio_leonardo_pinout.jpg" alt="Leonardo" /></p>
+<ol>
+<li><a href="https://duino4projects.com/arduino-leonardo-pinout-diagram/">https://duino4projects.com/arduino-leonardo-pinout-diagram/</a></li>
+</ol>
+<h1><a class="header" href="#maxim-7219-single-color-matrix-displays" id="maxim-7219-single-color-matrix-displays">Maxim 7219 single color matrix displays</a></h1>
+<p><img src="https://camo.githubusercontent.com/7a575fd18e96ae0e9d0355fa2989100406b5d23d/687474703a2f2f692e696d6775722e636f6d2f426656507938682e6a7067" alt="Display" /> [1]</p>
+<p>There are several modules with this chip and the matrix itself for example the FC-16, which either comes with a single 8x8 matrix or 4 of these combined together forming a 64x8 matrix display.</p>
+<p>A library that can be used to jumpstart the development is the <a href="https://github.com/MajicDesigns/MD_MAX72xx">MD_MAX72XX</a> library and for animations and scrolling the <a href="https://github.com/MajicDesigns/MD_Parola">MD_Parola</a> library can be easily used.</p>
+<p>[1] <a href="https://github.com/ridercz/Altairis-ESP8266-FC16">https://github.com/ridercz/Altairis-ESP8266-FC16</a></p>
+<h1><a class="header" href="#hardware-interfacing" id="hardware-interfacing">Hardware interfacing</a></h1>
+<p>This section describes hardware commonly used to interface other hardware - such as CAN dongles and modules, USB dongles, etc.</p>
+<h1><a class="header" href="#ch341a-universal-interface-dongle" id="ch341a-universal-interface-dongle">CH341A universal interface dongle</a></h1>
+<p><img src="https://zoobab.wdfiles.com/local--files/ch341-usb-spi-i2c-uart-isp-dongle/ch341a-devboard2.jpg" alt="dongle" /> [1]</p>
+<p>The CH341A provides USB accessible UART, I2C and SPI peripherals and some GPIO. The UART could theoretically be hooked to an RS232 transciever with hardware flow control etc.
+The problem is that the software support for this chip isn't that good even in Linux kernel. USB -&gt; UART works out of the box, but I2C and SPI need their respective non upstream kernel modules loaded by the user.</p>
+<blockquote>
+<p>From the design of these kernel modules it might not be possible to use both SPI and I2C simultaneously. This hasn't been confirmed as there was not enough experience in Linux kernel module development.</p>
+</blockquote>
+<p>Working modules for the board are for example these:</p>
+<ul>
+<li><a href="https://github.com/gschorcht/i2c-ch341-usb">I2C + GPIO</a></li>
+<li><a href="https://github.com/gschorcht/spi-ch341-usb">SPI + GPIO</a></li>
+</ul>
+<p>These modules however need some small changes in the <code>Makefile</code> (at least for building on Arch/Manjaro changing line 7 to <code> KERNEL_DIR  = /usr/lib/modules/$(KVERSION)/build</code> was required, DKMS failed on this operating system meaning that the modules need to be rebuilt when kernel updates).</p>
+<blockquote>
+<p>It might be an interesting task to at first combine the module for I2C and SPI into one and also to write the kernel module in Rust for better maintainibility.</p>
+</blockquote>
+<p>[1] <a href="https://zoobab.wdfiles.com/local--files/ch341-usb-spi-i2c-uart-isp-dongle/ch341a-devboard2.jpg">https://zoobab.wdfiles.com/local--files/ch341-usb-spi-i2c-uart-isp-dongle/ch341a-devboard2.jpg</a></p>
 <h1><a class="header" href="#tgz48" id="tgz48">TGZ48</a></h1>
 <h2><a class="header" href="#calculating-position-from-revolutions-and-angle" id="calculating-position-from-revolutions-and-angle">Calculating position from revolutions and angle</a></h2>
 <pre><code class="language-c++">auto map = packet.asMap();
