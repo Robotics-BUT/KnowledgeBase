@@ -11,3 +11,4 @@
     - [TGZ48](./hardware/tgz48.md)
     - [Uncategorized](./hardware/uncategorized/intro.md)
         - [IKEA Tradfri](./hardware/uncategorized/ikea_tradfri.md)
+        - [IKEA Tradfri](./hardware/uncategorized/msp430_pio.md)
