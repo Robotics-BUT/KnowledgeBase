@@ -2,6 +2,8 @@
 
 - [Introduction](./intro.md)
 - [Software](./software/intro.md)
+    - [Qt](./software/qt/intro.md)
+        - [Qt on Raspberry Pi](./software/qt/raspberry.md)
 - [Hardware](./hardware/intro.md)
     - [Arduino](./hardware/arduino/intro.md)
         - [Arduino Leonardo](./hardware/arduino/leonardo.md)
