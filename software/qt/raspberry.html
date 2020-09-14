@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Uncategorized - BUT Robotics - knowledge base</title>
+        <title>Qt on Raspberry Pi - BUT Robotics - knowledge base</title>
         
         
 
@@ -89,7 +89,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="../../intro.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="../../software/intro.html"><strong aria-hidden="true">2.</strong> Software</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../software/qt/intro.html"><strong aria-hidden="true">2.1.</strong> Qt</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../software/qt/raspberry.html"><strong aria-hidden="true">2.1.1.</strong> Qt on Raspberry Pi</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../../hardware/intro.html"><strong aria-hidden="true">3.</strong> Hardware</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../hardware/arduino/intro.html"><strong aria-hidden="true">3.1.</strong> Arduino</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../hardware/arduino/leonardo.html"><strong aria-hidden="true">3.1.1.</strong> Arduino Leonardo</a></li><li class="chapter-item expanded "><a href="../../hardware/arduino/max7219_matrix.html"><strong aria-hidden="true">3.1.2.</strong> MAX72XX Matrix displays</a></li></ol></li><li class="chapter-item expanded "><a href="../../hardware/interfacing/intro.html"><strong aria-hidden="true">3.2.</strong> Interfacing</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../hardware/interfacing/ch341a.html"><strong aria-hidden="true">3.2.1.</strong> CH341A dongle</a></li></ol></li><li class="chapter-item expanded "><a href="../../hardware/tgz48.html"><strong aria-hidden="true">3.3.</strong> TGZ48</a></li><li class="chapter-item expanded "><a href="../../hardware/uncategorized/intro.html" class="active"><strong aria-hidden="true">3.4.</strong> Uncategorized</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../hardware/uncategorized/ikea_tradfri.html"><strong aria-hidden="true">3.4.1.</strong> IKEA Tradfri</a></li><li class="chapter-item expanded "><a href="../../hardware/uncategorized/msp430_pio.html"><strong aria-hidden="true">3.4.2.</strong> IKEA Tradfri</a></li></ol></li></ol></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../../intro.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="../../software/intro.html"><strong aria-hidden="true">2.</strong> Software</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../software/qt/intro.html"><strong aria-hidden="true">2.1.</strong> Qt</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../software/qt/raspberry.html" class="active"><strong aria-hidden="true">2.1.1.</strong> Qt on Raspberry Pi</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../../hardware/intro.html"><strong aria-hidden="true">3.</strong> Hardware</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../hardware/arduino/intro.html"><strong aria-hidden="true">3.1.</strong> Arduino</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../hardware/arduino/leonardo.html"><strong aria-hidden="true">3.1.1.</strong> Arduino Leonardo</a></li><li class="chapter-item expanded "><a href="../../hardware/arduino/max7219_matrix.html"><strong aria-hidden="true">3.1.2.</strong> MAX72XX Matrix displays</a></li></ol></li><li class="chapter-item expanded "><a href="../../hardware/interfacing/intro.html"><strong aria-hidden="true">3.2.</strong> Interfacing</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../hardware/interfacing/ch341a.html"><strong aria-hidden="true">3.2.1.</strong> CH341A dongle</a></li></ol></li><li class="chapter-item expanded "><a href="../../hardware/tgz48.html"><strong aria-hidden="true">3.3.</strong> TGZ48</a></li><li class="chapter-item expanded "><a href="../../hardware/uncategorized/intro.html"><strong aria-hidden="true">3.4.</strong> Uncategorized</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../hardware/uncategorized/ikea_tradfri.html"><strong aria-hidden="true">3.4.1.</strong> IKEA Tradfri</a></li><li class="chapter-item expanded "><a href="../../hardware/uncategorized/msp430_pio.html"><strong aria-hidden="true">3.4.2.</strong> IKEA Tradfri</a></li></ol></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -155,21 +155,54 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#uncategorized-hardware" id="uncategorized-hardware">Uncategorized hardware</a></h1>
-<p>This section contains descriptions of hardware that may not be directly connected to robotics. I makes sense, however, to make some notes about making it work.</p>
+                        <h1><a class="header" href="#getting-qt-to-work-on-raspberry-pi" id="getting-qt-to-work-on-raspberry-pi">Getting Qt to work on Raspberry Pi</a></h1>
+<h2><a class="header" href="#installing-from-repositories" id="installing-from-repositories">Installing from repositories</a></h2>
+<h2><a class="header" href="#building-from-source" id="building-from-source">Building from source</a></h2>
+<p>This tutorial was inspired by the tutorial <a href="https://www.tal.org/tutorials/building-qt-512-raspberry-pi">here</a>.
+We will be using Qt 5.15 and skipping useless modules. Also gamepad and multimedia with GStreamer should be working out of the box.</p>
+<p>Install preprequisities by running</p>
+<pre><code class="language-bash">sudo apt-get update
+sudo apt-get install git gdb cmake gcc build-essential libfontconfig1-dev libdbus-1-dev libfreetype6-dev libicu-dev libinput-dev libxkbcommon-dev libsqlite3-dev libssl-dev libpng-dev libjpeg-dev libglib2.0-dev libraspberrypi-dev
+sudo apt-get install libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev gstreamer1.0-plugins-base gstreamer1.0-plugins-good gstreamer1.0-plugins-ugly gstreamer1.0-plugins-bad libgstreamer-plugins-bad1.0-dev gstreamer1.0-pulseaudio gstreamer1.0-tools gstreamer1.0-alsa libasound2-dev pulseaudio libpulse-dev libsdl2-dev libgles2-mesa-dev libgbm-dev libgl1-mesa-dev libglu1-mesa-dev mesa-common-dev libx11-dev
+
+Download the sources from [here](http://download.qt.io/official_releases/qt/) in our case we'll be using `wget` and downloading the 5.15.1 version
+```bash
+wget http://download.qt.io/official_releases/qt/5.15/5.15.1/single/qt-everywhere-src-5.15.1.tar.xz
+</code></pre>
+<p>Decompress the archive by running</p>
+<pre><code class="language-bash">tar xf qt-everywhere-src-5.15.1.tar.xz
+</code></pre>
+<p>Setup build configurations for the Raspberry Pi</p>
+<pre><code class="language-bash">git clone https://github.com/oniongarlic/qt-raspberrypi-configuration.git
+cd qt-raspberrypi-configuration &amp;&amp; make install DESTDIR=../qt-everywhere-src-5.15.1
+cd ..
+</code></pre>
+<p>Prepare the build environment</p>
+<pre><code class="language-bash">mkdir -p build
+cd build
+PKG_CONFIG_LIBDIR=/usr/lib/arm-linux-gnueabihf/pkgconfig:/usr/share/pkgconfig ../qt-everywhere-src-5.15.1/configure -platform linux-rpi4-v3d-g++ -v -opengl es2 -eglfs -no-gtk -no-xcb -opensource -confirm-license -release -reduce-exports -force-pkg-config -nomake examples -no-compile-examples -skip qtwayland -skip qtwebengine -skip qt3d -skip qtlocation -skip qtscript -skip qtsensors -skip qtserialport -skip qtspeech -skip qtcharts -skip qtvirtualkeyboard -skip qtquick3d  -qt-pcre -no-pch -ssl -evdev -system-freetype -fontconfig -glib -prefix /opt/Qt5.15 -qpa eglfs
+</code></pre>
+<p>And build it!</p>
+<pre><code class="language-bash">make -j4
+sudo make install
+</code></pre>
+<h3><a class="header" href="#notes" id="notes">Notes</a></h3>
+<p>It is recommended to use swap - at least 1 GB. 
+It is also recommended to use <code>tmux</code> for running the build for cases of SSH disconnections.
+You should also cool the Raspberry Pi properly, a small fan is enough to lower the CPU temperature by 20 C!.</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
                         
-                            <a rel="prev" href="../../hardware/tgz48.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../../software/qt/intro.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
                         
 
                         
-                            <a rel="next" href="../../hardware/uncategorized/ikea_tradfri.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next" href="../../hardware/intro.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
                         
@@ -181,13 +214,13 @@
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
                 
-                    <a rel="prev" href="../../hardware/tgz48.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../../software/qt/intro.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
                 
 
                 
-                    <a rel="next" href="../../hardware/uncategorized/ikea_tradfri.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next" href="../../hardware/intro.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
                 
