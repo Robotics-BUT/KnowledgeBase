@@ -91,7 +91,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="intro.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="software/intro.html"><strong aria-hidden="true">2.</strong> Software</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="software/qt/intro.html"><strong aria-hidden="true">2.1.</strong> Qt</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="software/qt/raspberry.html"><strong aria-hidden="true">2.1.1.</strong> Qt on Raspberry Pi</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="hardware/intro.html"><strong aria-hidden="true">3.</strong> Hardware</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="hardware/arduino/intro.html"><strong aria-hidden="true">3.1.</strong> Arduino</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="hardware/arduino/leonardo.html"><strong aria-hidden="true">3.1.1.</strong> Arduino Leonardo</a></li><li class="chapter-item expanded "><a href="hardware/arduino/max7219_matrix.html"><strong aria-hidden="true">3.1.2.</strong> MAX72XX Matrix displays</a></li></ol></li><li class="chapter-item expanded "><a href="hardware/interfacing/intro.html"><strong aria-hidden="true">3.2.</strong> Interfacing</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="hardware/interfacing/ch341a.html"><strong aria-hidden="true">3.2.1.</strong> CH341A dongle</a></li></ol></li><li class="chapter-item expanded "><a href="hardware/tgz48.html"><strong aria-hidden="true">3.3.</strong> TGZ48</a></li><li class="chapter-item expanded "><a href="hardware/uncategorized/intro.html"><strong aria-hidden="true">3.4.</strong> Uncategorized</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="hardware/uncategorized/ikea_tradfri.html"><strong aria-hidden="true">3.4.1.</strong> IKEA Tradfri</a></li><li class="chapter-item expanded "><a href="hardware/uncategorized/msp430_pio.html"><strong aria-hidden="true">3.4.2.</strong> IKEA Tradfri</a></li></ol></li></ol></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="intro.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="software/intro.html"><strong aria-hidden="true">2.</strong> Software</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="software/qt/intro.html"><strong aria-hidden="true">2.1.</strong> Qt</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="software/qt/raspberry.html"><strong aria-hidden="true">2.1.1.</strong> Qt on Raspberry Pi</a></li></ol></li><li class="chapter-item expanded "><a href="software/raspberrypi/intro.html"><strong aria-hidden="true">2.2.</strong> Raspberry Pi</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="software/raspberrypi/can_bus.html"><strong aria-hidden="true">2.2.1.</strong> CAN Bus</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="hardware/intro.html"><strong aria-hidden="true">3.</strong> Hardware</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="hardware/arduino/intro.html"><strong aria-hidden="true">3.1.</strong> Arduino</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="hardware/arduino/leonardo.html"><strong aria-hidden="true">3.1.1.</strong> Arduino Leonardo</a></li><li class="chapter-item expanded "><a href="hardware/arduino/max7219_matrix.html"><strong aria-hidden="true">3.1.2.</strong> MAX72XX Matrix displays</a></li></ol></li><li class="chapter-item expanded "><a href="hardware/interfacing/intro.html"><strong aria-hidden="true">3.2.</strong> Interfacing</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="hardware/interfacing/ch341a.html"><strong aria-hidden="true">3.2.1.</strong> CH341A dongle</a></li></ol></li><li class="chapter-item expanded "><a href="hardware/tgz48.html"><strong aria-hidden="true">3.3.</strong> TGZ48</a></li><li class="chapter-item expanded "><a href="hardware/uncategorized/intro.html"><strong aria-hidden="true">3.4.</strong> Uncategorized</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="hardware/uncategorized/ikea_tradfri.html"><strong aria-hidden="true">3.4.1.</strong> IKEA Tradfri</a></li><li class="chapter-item expanded "><a href="hardware/uncategorized/msp430_pio.html"><strong aria-hidden="true">3.4.2.</strong> IKEA Tradfri</a></li></ol></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -194,6 +194,27 @@ sudo make install
 <p>It is recommended to use swap - at least 1 GB. 
 It is also recommended to use <code>tmux</code> for running the build for cases of SSH disconnections.
 You should also cool the Raspberry Pi properly, a small fan is enough to lower the CPU temperature by 20 C!.</p>
+<h1><a class="header" href="#raspberry-pi" id="raspberry-pi">Raspberry Pi</a></h1>
+<h1><a class="header" href="#can-bus" id="can-bus">CAN Bus</a></h1>
+<p>Setting up the CAN bus is based on <a href="https://www.hackster.io/youness/how-to-connect-raspberry-pi-to-can-bus-b60235">this tutorial</a>.</p>
+<p>Kernel-wise the following needs to be added to the <code>/boot/config.txt</code></p>
+<pre><code>dtparam=spi=on
+dtoverlay=mcp2515-can0,oscillator=16000000,interrupt=25
+dtoverlay=spi0-hw-cs
+</code></pre>
+<p>This should work most of the time, however in recent Raspberry Pi firmware builds there happened to be a problem with this approach. A solution to the problem was described <a href="https://www.raspberrypi.org/forums/viewtopic.php?t=255470">here</a>.
+The solution utilizes the <code>pinout</code> program which can be installed using <code>sudo apt-get install python3-gpiozero</code>. Using this program the BCM number is read and then used in the <code>/boot/config.txt</code> as follows.</p>
+<pre><code>dtparam=spi=on
+dtoverlay=mcp2515-can0,oscillator=16000000,interrupt=25
+dtoverlay=spi-bcm{BCM_NUMBER}
+</code></pre>
+<p>For example:</p>
+<pre><code>dtparam=spi=on
+dtoverlay=mcp2515-can0,oscillator=16000000,interrupt=25
+dtoverlay=spi-bcm2837
+</code></pre>
+<p>Reboot is required after for the <code>/boot/config.txt</code> to take place.</p>
+<p>To debug problems with the SPI or the MCP2515 use <code>dmesg | grep spi</code>.</p>
 <h1><a class="header" href="#hardware" id="hardware">Hardware</a></h1>
 <p>This chapter contains information about making devices work and general tips for working with them.</p>
 <h1><a class="header" href="#arduino" id="arduino">Arduino</a></h1>

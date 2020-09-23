@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>IKEA Tradfri - BUT Robotics - knowledge base</title>
+        <title>CAN Bus - BUT Robotics - knowledge base</title>
         
         
 
@@ -89,7 +89,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="../../intro.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="../../software/intro.html"><strong aria-hidden="true">2.</strong> Software</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../software/qt/intro.html"><strong aria-hidden="true">2.1.</strong> Qt</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../software/qt/raspberry.html"><strong aria-hidden="true">2.1.1.</strong> Qt on Raspberry Pi</a></li></ol></li><li class="chapter-item expanded "><a href="../../software/raspberrypi/intro.html"><strong aria-hidden="true">2.2.</strong> Raspberry Pi</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../software/raspberrypi/can_bus.html"><strong aria-hidden="true">2.2.1.</strong> CAN Bus</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../../hardware/intro.html"><strong aria-hidden="true">3.</strong> Hardware</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../hardware/arduino/intro.html"><strong aria-hidden="true">3.1.</strong> Arduino</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../hardware/arduino/leonardo.html"><strong aria-hidden="true">3.1.1.</strong> Arduino Leonardo</a></li><li class="chapter-item expanded "><a href="../../hardware/arduino/max7219_matrix.html"><strong aria-hidden="true">3.1.2.</strong> MAX72XX Matrix displays</a></li></ol></li><li class="chapter-item expanded "><a href="../../hardware/interfacing/intro.html"><strong aria-hidden="true">3.2.</strong> Interfacing</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../hardware/interfacing/ch341a.html"><strong aria-hidden="true">3.2.1.</strong> CH341A dongle</a></li></ol></li><li class="chapter-item expanded "><a href="../../hardware/tgz48.html"><strong aria-hidden="true">3.3.</strong> TGZ48</a></li><li class="chapter-item expanded "><a href="../../hardware/uncategorized/intro.html"><strong aria-hidden="true">3.4.</strong> Uncategorized</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../hardware/uncategorized/ikea_tradfri.html" class="active"><strong aria-hidden="true">3.4.1.</strong> IKEA Tradfri</a></li><li class="chapter-item expanded "><a href="../../hardware/uncategorized/msp430_pio.html"><strong aria-hidden="true">3.4.2.</strong> IKEA Tradfri</a></li></ol></li></ol></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../../intro.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="../../software/intro.html"><strong aria-hidden="true">2.</strong> Software</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../software/qt/intro.html"><strong aria-hidden="true">2.1.</strong> Qt</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../software/qt/raspberry.html"><strong aria-hidden="true">2.1.1.</strong> Qt on Raspberry Pi</a></li></ol></li><li class="chapter-item expanded "><a href="../../software/raspberrypi/intro.html"><strong aria-hidden="true">2.2.</strong> Raspberry Pi</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../software/raspberrypi/can_bus.html" class="active"><strong aria-hidden="true">2.2.1.</strong> CAN Bus</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../../hardware/intro.html"><strong aria-hidden="true">3.</strong> Hardware</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../hardware/arduino/intro.html"><strong aria-hidden="true">3.1.</strong> Arduino</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../hardware/arduino/leonardo.html"><strong aria-hidden="true">3.1.1.</strong> Arduino Leonardo</a></li><li class="chapter-item expanded "><a href="../../hardware/arduino/max7219_matrix.html"><strong aria-hidden="true">3.1.2.</strong> MAX72XX Matrix displays</a></li></ol></li><li class="chapter-item expanded "><a href="../../hardware/interfacing/intro.html"><strong aria-hidden="true">3.2.</strong> Interfacing</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../hardware/interfacing/ch341a.html"><strong aria-hidden="true">3.2.1.</strong> CH341A dongle</a></li></ol></li><li class="chapter-item expanded "><a href="../../hardware/tgz48.html"><strong aria-hidden="true">3.3.</strong> TGZ48</a></li><li class="chapter-item expanded "><a href="../../hardware/uncategorized/intro.html"><strong aria-hidden="true">3.4.</strong> Uncategorized</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../hardware/uncategorized/ikea_tradfri.html"><strong aria-hidden="true">3.4.1.</strong> IKEA Tradfri</a></li><li class="chapter-item expanded "><a href="../../hardware/uncategorized/msp430_pio.html"><strong aria-hidden="true">3.4.2.</strong> IKEA Tradfri</a></li></ol></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -155,54 +155,39 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#ikea-tradfri" id="ikea-tradfri">IKEA Tradfri</a></h1>
-<h2><a class="header" href="#ikea-tradfri--phillips-hue--homekit" id="ikea-tradfri--phillips-hue--homekit">IKEA Tradfri + Phillips Hue + HomeKit</a></h2>
-<p>Both the Tradfri and Hue use ZigBee protocol to operate and also implement some standardized data interface. That means that a Hue bridge can be used to control Tradfri lightbulbs and read data from other sensors.</p>
-<p>To connect a lightbulb to the bridge, first in the app it is required to start search for lights. Then the lightbulb needs to be turned off and on 6 times leaving it in connection mode (the bulb changes its brightness in three steps).</p>
-<p>The bridge should then identify the bulb and pair with it.</p>
-<blockquote>
-<p>When the connection mode is activated a new search for lightbulbs in the app can be performed.</p>
-</blockquote>
-<p>After the pairing finishes, the lightbulb can be easily used with the Hue app, unfortunately the app <strong>won't publish</strong> the 3rd party accessories to HomeKit.</p>
-<p>There are two solutions to this problem - either buy the IKEA Tradfri bridge and use it to publish the accessories to the HomeKit, or use a home server running Homebridge with appropriate plugins.</p>
-<p>The Homebridge server can be installed using the tutorial <a href="https://github.com/homebridge/homebridge/wiki">here</a> and can then be used to control devices from many more manufacturers that do not implement HomeKit on their own.</p>
-<p>To make the devices connected to the Hue bridge work, a plugin <a href="https://github.com/ebaauw/homebridge-hue">homebridge-hue</a> needs to be installed and configured with the following configuration, that ensures that the plugin won't advertise native Hue devices, but only the third party one.</p>
-<pre><code class="language-json">...
-&quot;platforms&quot;: [
-        ...
-        {
-            &quot;name&quot;: &quot;Hue-tradfri&quot;,
-            &quot;anyOn&quot;: true,
-            &quot;lights&quot;: true,
-            &quot;nativeHomeKitLights&quot;: true,
-            &quot;nativeHomeKitSensors&quot;: true,
-            &quot;nupnp&quot;: true,
-            &quot;resource&quot;: true,
-            &quot;users&quot;: {
-                &quot;USER_ID&quot;: &quot;TOKEN&quot;
-            },
-            &quot;platform&quot;: &quot;Hue&quot;
-        }
-        ...
-    ]
-...
+                        <h1><a class="header" href="#can-bus" id="can-bus">CAN Bus</a></h1>
+<p>Setting up the CAN bus is based on <a href="https://www.hackster.io/youness/how-to-connect-raspberry-pi-to-can-bus-b60235">this tutorial</a>.</p>
+<p>Kernel-wise the following needs to be added to the <code>/boot/config.txt</code></p>
+<pre><code>dtparam=spi=on
+dtoverlay=mcp2515-can0,oscillator=16000000,interrupt=25
+dtoverlay=spi0-hw-cs
 </code></pre>
-<blockquote>
-<p>Bear in mind, that after installing the plugin and making it connect to the bridge it is required to save the <code>USER_ID</code> and <code>TOKEN</code> to the configuration file.</p>
-</blockquote>
+<p>This should work most of the time, however in recent Raspberry Pi firmware builds there happened to be a problem with this approach. A solution to the problem was described <a href="https://www.raspberrypi.org/forums/viewtopic.php?t=255470">here</a>.
+The solution utilizes the <code>pinout</code> program which can be installed using <code>sudo apt-get install python3-gpiozero</code>. Using this program the BCM number is read and then used in the <code>/boot/config.txt</code> as follows.</p>
+<pre><code>dtparam=spi=on
+dtoverlay=mcp2515-can0,oscillator=16000000,interrupt=25
+dtoverlay=spi-bcm{BCM_NUMBER}
+</code></pre>
+<p>For example:</p>
+<pre><code>dtparam=spi=on
+dtoverlay=mcp2515-can0,oscillator=16000000,interrupt=25
+dtoverlay=spi-bcm2837
+</code></pre>
+<p>Reboot is required after for the <code>/boot/config.txt</code> to take place.</p>
+<p>To debug problems with the SPI or the MCP2515 use <code>dmesg | grep spi</code>.</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
                         
-                            <a rel="prev" href="../../hardware/uncategorized/intro.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../../software/raspberrypi/intro.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
                         
 
                         
-                            <a rel="next" href="../../hardware/uncategorized/msp430_pio.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next" href="../../hardware/intro.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
                         
@@ -214,13 +199,13 @@
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
                 
-                    <a rel="prev" href="../../hardware/uncategorized/intro.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../../software/raspberrypi/intro.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
                 
 
                 
-                    <a rel="next" href="../../hardware/uncategorized/msp430_pio.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next" href="../../hardware/intro.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
                 
