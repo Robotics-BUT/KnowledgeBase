@@ -4,6 +4,8 @@
 - [Software](./software/intro.md)
     - [Qt](./software/qt/intro.md)
         - [Qt on Raspberry Pi](./software/qt/raspberry.md)
+    - [Raspberry Pi](./software/raspberrypi/intro.md)
+        - [CAN Bus](./software/raspberrypi/can_bus.md)
 - [Hardware](./hardware/intro.md)
     - [Arduino](./hardware/arduino/intro.md)
         - [Arduino Leonardo](./hardware/arduino/leonardo.md)
